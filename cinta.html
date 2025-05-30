@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buat Kamu 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to top right, #ffe6f0, #ffecec);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 15px;
+      object-fit: cover;
+      max-height: 300px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2em;
+      color: #e60073;
+      margin-bottom: 10px;
+    }
+
+    p#typewriter {
+      font-size: 1em;
+      margin-bottom: 20px;
+      min-height: 3em;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      margin: 5px;
+      font-size: 16px;
+      background: #e60073;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      background: #cc005f;
+    }
+
+    #noBtn {
+      position: absolute;
+    }
+
+    #hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: float 4s linear infinite;
+      border-radius: 50%;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% {
+        bottom: -10%;
+        opacity: 1;
+      }
+      100% {
+        bottom: 110%;
+        left: calc(100% * var(--i));
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .btn {
+        width: 90%;
+        font-size: 14px;
+      }
+    }
+
+    .final-message {
+      display: none;
+      font-size: 1.5em;
+      color: #e60073;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="mainContainer">
+    <img src="wan.jpg" alt="foto kita">
+    <h1>Buat Kamu 😳</h1>
+    <p id="typewriter"></p>
+    <button class="btn" onclick="accept()">Iya, aku juga suka 😍</button>
+    <button class="btn" id="noBtn" onmouseover="moveNoBtn()">Enggak 😅</button>
+  </div>
+
+  <div class="final-message" id="finalMessage">
+    🥰 Aku seneng banget kamu nerima aku! <br> Aku sayang kamu! ❤️
+  </div>
+
+  <div id="hearts"></div>
+
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+    Browser kamu tidak mendukung audio.
+  </audio>
+
+  <script>
+    const text = "Seperti bintang yang tak pernah lelah menemani malam, begitu juga aku yang tak ingin lelah memperjuangkanmu. Aku nggak janji akan jadi yang sempurna, tapi aku janji akan selalu ada buat kamu. Mau nggak kamu jadi bagian dari hidupku? 💖";
+    const typeTarget = document.getElementById("typewriter");
+    let index = 0;
+
+    function typeWriter() {
+      if (index < text.length) {
+        typeTarget.innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeWriter, 50);
+      }
+    }
+    typeWriter();
+
+    function moveNoBtn() {
+      const btn = document.getElementById("noBtn");
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 100);
+      btn.style.left = `${x}px`;
+      btn.style.top = `${y}px`;
+    }
+
+    function accept() {
+      document.getElementById("mainContainer").style.display = "none";
+      document.getElementById("finalMessage").style.display = "block";
+    }
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = Math.random() * 100 + "%";
+      heart.style.setProperty('--i', Math.random());
+      document.getElementById("hearts").appendChild(heart);
+      setTimeout(() => heart.remove(), 4000);
+    }
+
+    setInterval(createHeart, 300);
+  </script>
+
+</body>
+</html>
